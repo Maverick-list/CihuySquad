@@ -1,0 +1,12 @@
+node_modules/
+ClimateVR-Platform/
+.DS_Store
+*.log
+.env
+.npm/
+dist/
+build/
+.next/
+.vscode/
+ClimateVR-Platform/
+node_modules/

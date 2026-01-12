@@ -1,0 +1,46 @@
+{
+  "name": "greenvision-ai",
+  "version": "1.0.0",
+  "description": "AI Platform for Climate Action - Mitigation & Adaptation",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "dev:frontend": "vite",
+    "build:frontend": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai",
+    "climate",
+    "environment",
+    "sustainability",
+    "ollama",
+    "ollama"
+  ],
+  "author": "GreenVision AI Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "body-parser": "^1.20.2",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "framer-motion": "^12.25.0",
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.12.0",
+    "recharts": "^3.6.0",
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "autoprefixer": "^10.4.23",
+    "nodemon": "^3.0.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.1",
+    "vite": "^7.3.1"
+  }
+}

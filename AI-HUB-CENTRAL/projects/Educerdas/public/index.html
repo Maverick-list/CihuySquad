@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EduCerdas AI - Platform Pembelajaran Personalized dengan AI untuk Semua">
+    <meta name="theme-color" content="#6366f1">
+    <title>🎓 EduCerdas AI - Belajar Cerdas, Masa Depan Cerah</title>
+    
+    <!-- Font Awesome untuk Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=OpenDyslexic&display=swap" rel="stylesheet">
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1>EduCerdas AI</h1>
+            <p>Membuka Pintu Kesempatan Belajar untuk Semua</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <span class="loading-text">Memuat...</span>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container hidden">
+        
+        <!-- Header Navigation -->
+        <header class="header">
+            <div class="header-left">
+                <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>EduCerdas AI</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <nav class="main-nav" id="main-nav">
+                    <a href="#" class="nav-link active" data-section="home">
+                        <i class="fas fa-home"></i>
+                        <span>Beranda</span>
+                    </a>
+                    <a href="#" class="nav-link" data-section="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profil Saya</span>
+                    </a>
+                    <a href="#" class="nav-link" data-section="learning">
+                        <i class="fas fa-book-open"></i>
+                        <span>Belajar</span>
+                    </a>
+                    <a href="#" class="nav-link" data-section="quiz">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>Kuis</span>
+                    </a>
+                    <a href="#" class="nav-link" data-section="progress">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progres</span>
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="header-right">
+                <!-- Accessibility Toggle -->
+                <button id="accessibility-btn" class="icon-btn" aria-label="Aksesibilitas" title="Pengaturan Aksesibilitas">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+                
+                <!-- Dark/Light Mode Toggle -->
+                <button id="theme-toggle" class="icon-btn" aria-label="Ubah Tema" title="Ganti Tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Demo Mode Indicator -->
+                <div id="demo-indicator" class="demo-indicator" title="Mode Demo Aktif">
+                    <i class="fas fa-wifi"></i>
+                    <span>Demo</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar untuk Mobile -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduCerdas AI</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-section="home">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Profil Saya</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="learning">
+                    <i class="fas fa-book-open"></i>
+                    <span>Belajar</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="quiz">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>Kuis</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="progress">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progres</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>🎓 DINACOM 2024</p>
+                <p>AI for Social Impact</p>
+            </div>
+        </aside>
+
+        <!-- Overlay untuk Sidebar -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Section: Beranda -->
+            <section id="section-home" class="content-section active">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span class="highlight">Belajar Cerdas</span>
+                            <br>Masa Depan Cerah
+                        </h1>
+                        <p class="hero-subtitle">
+                            Platform pembelajaran berbasis AI yang menyesuaikan gaya belajar,
+                            mendukung kebutuhan khusus, dan siap digunakan di mana saja.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary btn-lg" onclick="showSection('profile')">
+                                <i class="fas fa-rocket"></i>
+                                Mulai Belajar
+                            </button>
+                            <button class="btn btn-secondary btn-lg" onclick="showSection('demo')">
+                                <i class="fas fa-play"></i>
+                                Lihat Demo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <div class="floating-cards">
+                            <div class="floating-card card-1">
+                                <i class="fas fa-brain"></i>
+                                <span>AI Pribadi</span>
+                            </div>
+                            <div class="floating-card card-2">
+                                <i class="fas fa-universal-access"></i>
+                                <span>Inklusif</span>
+                            </div>
+                            <div class="floating-card card-3">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Responsif</span>
+                            </div>
+                            <div class="floating-card card-4">
+                                <i class="fas fa-video"></i>
+                                <span>Daring</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Section -->
+                <div class="features-section">
+                    <h2 class="section-title">Kenapa EduCerdas AI?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card" data-aos="fade-up">
+                            <div class="feature-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3>AI Personal</h3>
+                            <p>Sistem AI yang mempelajari gaya belajar dan menyesuaikan materi khusus untukmu.</p>
+                        </div>
+                        
+                        <div class="feature-card" data-aos="fade-up" data-delay="100">
+                            <div class="feature-icon">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <h3>Inklusif & Aksesibel</h3>
+                            <p>Dukung siswa dengan disleksia, autisme, dan kesulitan fokus dengan mode khusus.</p>
+                        </div>
+                        
+                        <div class="feature-card" data-aos="fade-up" data-delay="200">
+                            <div class="feature-icon">
+                                <i class="fas fa-laptop-house"></i>
+                            </div>
+                            <h3>Belajar Di Mana Saja</h3>
+                            <p>Akses materi pembelajaran kapan saja, bahkan tanpa koneksi internet.</p>
+                        </div>
+                        
+                        <div class="feature-card" data-aos="fade-up" data-delay="300">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <h3>Progress Tracking</h3>
+                            <p>Pantau perkembangan belajar dengan dashboard yang mudah dipahami.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="50">0</span>
+                        <span class="stat-label">Materi Pembelajaran</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="5">0</span>
+                        <span class="stat-label">Mata Pelajaran</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="3">0</span>
+                        <span class="stat-label">Mode Aksesibilitas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="100">0</span>
+                        <span class="stat-label">% Gratis</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Profil Saya -->
+            <section id="section-profile" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-circle"></i> Profil Saya</h2>
+                    <p>Isi data berikut agar AI bisa menyesuaikan pembelajaran untukmu</p>
+                </div>
+
+                <div class="profile-container">
+                    <form id="profile-form" class="profile-form">
+                        <!-- Informasi Dasar -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-info-circle"></i> Informasi Dasar</h3>
+                            
+                            <div class="form-group">
+                                <label for="student-name">Nama Lengkap</label>
+                                <input type="text" id="student-name" name="name" 
+                                       placeholder="Contoh: Ahmad Fauzi" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="student-age">Usia</label>
+                                    <select id="student-age" name="age" required>
+                                        <option value="">Pilih Usia</option>
+                                        <option value="6">6 tahun</option>
+                                        <option value="7">7 tahun</option>
+                                        <option value="8">8 tahun</option>
+                                        <option value="9">9 tahun</option>
+                                        <option value="10">10 tahun</option>
+                                        <option value="11">11 tahun</option>
+                                        <option value="12">12 tahun</option>
+                                        <option value="13">13 tahun</option>
+                                        <option value="14">14 tahun</option>
+                                        <option value="15">15 tahun</option>
+                                        <option value="16">16 tahun</option>
+                                        <option value="17">17 tahun</option>
+                                        <option value="18">18 tahun</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="education-level">Tingkat Pendidikan</label>
+                                    <select id="education-level" name="educationLevel" required>
+                                        <option value="">Pilih Tingkat</option>
+                                        <option value="sd">SD (Kelas 1-6)</option>
+                                        <option value="smp">SMP (Kelas 7-9)</option>
+                                        <option value="sma">SMA/SMK (Kelas 10-12)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mata Pelajaran -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-book"></i> Mata Pelajaran</h3>
+                            <p class="form-hint">Pilih mata pelajaran yang ingin dipelajari</p>
+                            
+                            <div class="subjects-grid">
+                                <label class="subject-option">
+                                    <input type="checkbox" name="subjects" value="matematika">
+                                    <span class="subject-card">
+                                        <i class="fas fa-calculator"></i>
+                                        <span>Matematika</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="subject-option">
+                                    <input type="checkbox" name="subjects" value="bahasa-indonesia">
+                                    <span class="subject-card">
+                                        <i class="fas fa-book"></i>
+                                        <span>B. Indonesia</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="subject-option">
+                                    <input type="checkbox" name="subjects" value="bahasa-inggris">
+                                    <span class="subject-card">
+                                        <i class="fas fa-language"></i>
+                                        <span>B. Inggris</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="subject-option">
+                                    <input type="checkbox" name="subjects" value="ipa">
+                                    <span class="subject-card">
+                                        <i class="fas fa-flask"></i>
+                                        <span>IPA</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="subject-option">
+                                    <input type="checkbox" name="subjects" value="ips">
+                                    <span class="subject-card">
+                                        <i class="fas fa-globe"></i>
+                                        <span>IPS</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Gaya Belajar -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-eye"></i> Gaya Belajar</h3>
+                            <p class="form-hint">Bagaimana kamu paling nyaman belajar?</p>
+                            
+                            <div class="learning-style-options">
+                                <label class="style-option">
+                                    <input type="radio" name="learningStyle" value="visual">
+                                    <div class="style-card">
+                                        <i class="fas fa-eye"></i>
+                                        <h4>Visual</h4>
+                                        <p>Lebih suka melihat gambar, diagram, dan video</p>
+                                    </div>
+                                </label>
+                                
+                                <label class="style-option">
+                                    <input type="radio" name="learningStyle" value="audio">
+                                    <div class="style-card">
+                                        <i class="fas fa-headphones"></i>
+                                        <h4>Audio</h4>
+                                        <p>Lebih suka mendengarkan penjelasan dan musik</p>
+                                    </div>
+                                </label>
+                                
+                                <label class="style-option">
+                                    <input type="radio" name="learningStyle" value="text">
+                                    <div class="style-card">
+                                        <i class="fas fa-book-reader"></i>
+                                        <h4>Teks</h4>
+                                        <p>Lebih suka membaca dan menulis</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Kebutuhan Khusus -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-heart"></i> Kebutuhan Khusus (Opsional)</h3>
+                            <p class="form-hint">Pilih jika ada kebutuhan khusus untuk penyesuaian tampilan</p>
+                            
+                            <div class="special-needs-options">
+                                <label class="need-option">
+                                    <input type="checkbox" name="specialNeeds" value="dyslexia">
+                                    <span class="need-card">
+                                        <i class="fas fa-font"></i>
+                                        <span>Disleksia</span>
+                                        <small>Font khusus, spasi besar</small>
+                                    </span>
+                                </label>
+                                
+                                <label class="need-option">
+                                    <input type="checkbox" name="specialNeeds" value="autism">
+                                    <span class="need-card">
+                                        <i class="fas fa-hands-wash"></i>
+                                        <span>Autisme Ringan</span>
+                                        <small>UI sederhana, instruksi jelas</small>
+                                    </span>
+                                </label>
+                                
+                                <label class="need-option">
+                                    <input type="checkbox" name="specialNeeds" value="focus">
+                                    <span class="need-card">
+                                        <i class="fas fa-bullseye"></i>
+                                        <span>Kesulitan Fokus</span>
+                                        <small>Mode fokus, tanpa gangguan</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="resetProfile()">
+                                <i class="fas fa-undo"></i>
+                                Reset
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-magic"></i>
+                                Buat Rekomendasi AI
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Section: Belajar -->
+            <section id="section-learning" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-book-open"></i> Rekomendasi Pembelajaran</h2>
+                    <p>Materi belajar yang disesuaikan untukmu oleh AI</p>
+                </div>
+
+                <div id="learning-content" class="learning-content">
+                    <!-- Loading State -->
+                    <div class="loading-state" id="learning-loading">
+                        <div class="spinner"></div>
+                        <p>AI sedang menganalisis profilmu...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="empty-state hidden" id="learning-empty">
+                        <i class="fas fa-user-clock"></i>
+                        <h3>Profil Belum Dibuat</h3>
+                        <p>Isi profilmu terlebih dahulu untuk mendapatkan rekomendasi belajar.</p>
+                        <button class="btn btn-primary" onclick="showSection('profile')">
+                            <i class="fas fa-user-plus"></i>
+                            Buat Profil
+                        </button>
+                    </div>
+
+                    <!-- Recommendations Content -->
+                    <div class="recommendations-container hidden" id="learning-recommendations">
+                        <!-- AI Info Banner -->
+                        <div class="ai-banner" id="ai-banner">
+                            <div class="ai-banner-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="ai-banner-content">
+                                <h4 id="ai-banner-title">AI Recommendation Active</h4>
+                                <p id="ai-banner-text">Based on your profile, we've customized these learning materials for you.</p>
+                            </div>
+                            <div class="ai-badge" id="ai-badge">AI</div>
+                        </div>
+
+                        <!-- Study Schedule -->
+                        <div class="study-schedule-card">
+                            <h3><i class="fas fa-calendar-alt"></i> Jadwal Belajar yang Direkomendasikan</h3>
+                            <div class="schedule-grid" id="schedule-grid">
+                                <!-- Will be populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Learning Materials -->
+                        <div class="materials-section">
+                            <h3><i class="fas fa-book-reader"></i> Materi Pembelajaran</h3>
+                            <div class="materials-grid" id="materials-grid">
+                                <!-- Will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Kuis -->
+            <section id="section-quiz" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clipboard-check"></i> Kuis Interaktif</h2>
+                    <p>Uji pemahamanmu dengan kuis adaptif berbasis AI</p>
+                </div>
+
+                <div class="quiz-container">
+                    <!-- Quiz Setup -->
+                    <div id="quiz-setup" class="quiz-setup">
+                        <div class="quiz-options">
+                            <div class="form-group">
+                                <label for="quiz-subject">Mata Pelajaran</label>
+                                <select id="quiz-subject">
+                                    <option value="matematika">Matematika</option>
+                                    <option value="bahasa-indonesia">Bahasa Indonesia</option>
+                                    <option value="bahasa-inggris">Bahasa Inggris</option>
+                                    <option value="ipa">IPA</option>
+                                    <option value="ips">IPS</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="quiz-level">Tingkat</label>
+                                <select id="quiz-level">
+                                    <option value="sd">SD</option>
+                                    <option value="smp">SMP</option>
+                                    <option value="sma">SMA</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="quiz-difficulty">Tingkat Kesulitan</label>
+                                <select id="quiz-difficulty">
+                                    <option value="easy">Mudah</option>
+                                    <option value="medium" selected>Sedang</option>
+                                    <option value="hard">Sulit</option>
+                                </select>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-lg" onclick="startQuiz()">
+                                <i class="fas fa-play"></i>
+                                Mulai Kuis
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Active -->
+                    <div id="quiz-active" class="quiz-active hidden">
+                        <div class="quiz-header">
+                            <div class="quiz-progress">
+                                <span id="quiz-progress-text">Soal 1 dari 5</span>
+                                <div class="quiz-progress-bar">
+                                    <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="quiz-timer">
+                                <i class="fas fa-clock"></i>
+                                <span id="quiz-timer">00:00</span>
+                            </div>
+                        </div>
+
+                        <div class="quiz-question-container" id="quiz-question">
+                            <!-- Question will be populated by JS -->
+                        </div>
+
+                        <div class="quiz-actions">
+                            <button class="btn btn-secondary" id="quiz-prev-btn" onclick="prevQuestion()" disabled>
+                                <i class="fas fa-arrow-left"></i>
+                                Sebelumnya
+                            </button>
+                            <button class="btn btn-primary" id="quiz-next-btn" onclick="nextQuestion()">
+                                Berikutnya
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Result -->
+                    <div id="quiz-result" class="quiz-result hidden">
+                        <div class="result-card">
+                            <div class="result-icon" id="result-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h2>Hasil Kuis</h2>
+                            <div class="result-score">
+                                <span id="result-score">0</span>
+                                <span class="result-total">/100</span>
+                            </div>
+                            <p id="result-message">Kerja bagus!</p>
+                            
+                            <div class="result-details">
+                                <div class="result-stat">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span id="result-correct">0 Benar</span>
+                                </div>
+                                <div class="result-stat">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="result-time">00:00</span>
+                                </div>
+                            </div>
+
+                            <div class="result-feedback" id="result-feedback">
+                                <!-- AI Feedback will be populated -->
+                            </div>
+
+                            <div class="result-actions">
+                                <button class="btn btn-secondary" onclick="retryQuiz()">
+                                    <i class="fas fa-redo"></i>
+                                    Ulangi Kuis
+                                </button>
+                                <button class="btn btn-primary" onclick="showSection('learning')">
+                                    <i class="fas fa-book"></i>
+                                    Lihat Materi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Progres -->
+            <section id="section-progress" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Progres Belajar</h2>
+                    <p>Pantau perjalanan belajarmu</p>
+                </div>
+
+                <div class="progress-container">
+                    <!-- Overview Cards -->
+                    <div class="progress-overview">
+                        <div class="overview-card">
+                            <div class="overview-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-value" id="total-hours">0</span>
+                                <span class="overview-label">Total Jam Belajar</span>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="overview-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-value" id="completed-modules">0</span>
+                                <span class="overview-label">Modul Selesai</span>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="overview-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-value" id="average-score">0</span>
+                                <span class="overview-label">Rata-rata Skor</span>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="overview-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-value" id="streak-days">0</span>
+                                <span class="overview-label">Hari Beruntun</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Goal -->
+                    <div class="weekly-goal-card">
+                        <h3><i class="fas fa-bullseye"></i> Target Mingguan</h3>
+                        <div class="goal-progress">
+                            <div class="goal-progress-bar">
+                                <div class="goal-progress-fill" id="goal-progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="goal-text" id="goal-text">0 / 5 jam</span>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="achievements-section">
+                        <h3><i class="fas fa-trophy"></i> Pencapaian</h3>
+                        <div class="achievements-grid" id="achievements-grid">
+                            <!-- Will be populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Activity Chart -->
+                    <div class="activity-section">
+                        <h3><i class="fas fa-chart-bar"></i> Aktivitas Belajar</h3>
+                        <div class="activity-chart" id="activity-chart">
+                            <!-- Simple bar chart -->
+                            <div class="chart-bars">
+                                <div class="chart-bar" data-day="Sen"><div class="bar" style="height: 60%"></div></div>
+                                <div class="chart-bar" data-day="Sel"><div class="bar" style="height: 80%"></div></div>
+                                <div class="chart-bar" data-day="Rab"><div class="bar" style="height: 40%"></div></div>
+                                <div class="chart-bar" data-day="Kam"><div class="bar" style="height: 90%"></div></div>
+                                <div class="chart-bar" data-day="Jum"><div class="bar" style="height: 70%"></div></div>
+                                <div class="chart-bar" data-day="Sab"><div class="bar" style="height: 50%"></div></div>
+                                <div class="chart-bar" data-day="Min"><div class="bar" style="height: 30%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Accessibility Modal -->
+        <div id="accessibility-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-universal-access"></i> Pengaturan Aksesibilitas</h3>
+                    <button class="modal-close" onclick="closeAccessibilityModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="accessibility-options">
+                        <div class="access-option">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="mode-dyslexia" onchange="toggleDyslexiaMode()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <div class="access-info">
+                                <h4>Mode Disleksia</h4>
+                                <p>Font khusus dengan spasi lebih besar untuk kemudahan membaca</p>
+                            </div>
+                        </div>
+
+                        <div class="access-option">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="mode-focus" onchange="toggleFocusMode()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <div class="access-info">
+                                <h4>Mode Fokus</h4>
+                                <p>UI sederhana dengan minimal gangguan</p>
+                            </div>
+                        </div>
+
+                        <div class="access-option">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="mode-audio" onchange="toggleAudioMode()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <div class="access-info">
+                                <h4>Mode Audio</h4>
+                                <p>Aktifkan text-to-speech untuk membaca konten</p>
+                            </div>
+                        </div>
+
+                        <div class="access-option">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="mode-highcontrast" onchange="toggleHighContrast()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <div class="access-info">
+                                <h4>Kontras Tinggi</h4>
+                                <p>Teks lebih mudah dibaca dengan kontras tinggi</p>
+                            </div>
+                        </div>
+
+                        <div class="access-option">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="mode-largetext" onchange="toggleLargeText()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <div class="access-info">
+                                <h4>Huruf Besar</h4>
+                                <p>Perbesar ukuran teks di seluruh aplikasi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p><i class="fas fa-graduation-cap"></i> EduCerdas AI - DINACOM 2024</p>
+                    <p class="footer-tagline">AI untuk Transformasi Pendidikan</p>
+                </div>
+                <div class="footer-right">
+                    <p>Dibuat dengan <i class="fas fa-heart" style="color: #e74c3c;"></i> untuk masa depan pendidikan Indonesia</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript Application -->
+    <script src="app.js"></script>
+
+
+    </body>
+    </html>
+

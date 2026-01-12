@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenVision AI - Platform Aksi Iklim dengan AI Lokal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader">
+            <div class="earth-spin"></div>
+            <p>🌍 GreenVision AI Memuat...</p>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app" class="app hidden">
+        <!-- Logo/Navigation Hub (Center Top) -->
+        <div class="nav-hub">
+            <button id="logo-button" class="logo-button" title="Menu Navigasi">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Futuristic Earth/Energy Logo -->
+                    <defs>
+                        <radialGradient id="earthGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+                        </radialGradient>
+                    </defs>
+                    <!-- Earth Circle -->
+                    <circle cx="50" cy="50" r="35" fill="url(#earthGrad)" stroke="#06b6d4" stroke-width="2" opacity="0.9"/>
+                    <!-- Continents (stylized) -->
+                    <path d="M 35 45 Q 40 40 45 45 T 55 45" fill="#059669" opacity="0.6"/>
+                    <!-- Energy Ring -->
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5"/>
+                    <!-- Leaf accent -->
+                    <path d="M 60 35 Q 70 30 75 40 Q 70 45 60 42" fill="#34d399" opacity="0.7"/>
+                    <!-- Center dot -->
+                    <circle cx="50" cy="50" r="3" fill="#ffffff"/>
+                </svg>
+            </button>
+            <span class="logo-text">GreenVision AI</span>
+        </div>
+
+        <!-- Navigation Overlay (Hidden by default) -->
+        <div id="nav-overlay" class="nav-overlay">
+            <button class="nav-close" onclick="closeNavOverlay()">
+                <i class="fas fa-times"></i>
+            </button>
+            <nav id="nav-menu" class="nav-menu">
+                <div id="nav-public">
+                    <a href="#" data-section="beranda" onclick="navigateTo(event, 'beranda')">
+                        <i class="fas fa-home"></i>
+                        <span>Beranda</span>
+                    </a>
+                    <a href="#" data-section="monitor" onclick="navigateTo(event, 'monitor')">
+                        <i class="fas fa-cloud"></i>
+                        <span>Monitor Iklim</span>
+                    </a>
+                    <a href="#" data-section="energi" onclick="navigateTo(event, 'energi')">
+                        <i class="fas fa-bolt"></i>
+                        <span>Energi & Karbon</span>
+                    </a>
+                    <a href="#" data-section="lingkungan" onclick="navigateTo(event, 'lingkungan')">
+                        <i class="fas fa-leaf"></i>
+                        <span>Lingkungan</span>
+                    </a>
+                    <a href="#" data-section="tentang" onclick="navigateTo(event, 'tentang')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tentang Dampak</span>
+                    </a>
+                    <div class="nav-divider"></div>
+                    <a href="#" data-section="login" onclick="navigateTo(event, 'login')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Masuk</span>
+                    </a>
+                    <a href="#" data-section="register" onclick="navigateTo(event, 'register')">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Daftar</span>
+                    </a>
+                </div>
+                
+                <div id="nav-authenticated" class="hidden">
+                     <a href="#" data-section="beranda" onclick="navigateTo(event, 'beranda')">
+                        <i class="fas fa-home"></i>
+                        <span>Beranda</span>
+                    </a>
+                    <a href="#" data-section="monitor" onclick="navigateTo(event, 'monitor')">
+                        <i class="fas fa-cloud"></i>
+                        <span>Monitor Iklim</span>
+                    </a>
+                    <a href="#" data-section="chat" onclick="navigateTo(event, 'chat')">
+                        <i class="fas fa-comments"></i>
+                        <span>AI Chat</span>
+                    </a>
+                    <a href="#" data-section="energi" onclick="navigateTo(event, 'energi')">
+                        <i class="fas fa-bolt"></i>
+                        <span>Energi & Karbon</span>
+                    </a>
+                     <a href="#" data-section="lingkungan" onclick="navigateTo(event, 'lingkungan')">
+                        <i class="fas fa-leaf"></i>
+                        <span>Lingkungan</span>
+                    </a>
+                    <div class="nav-divider"></div>
+                     <a href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Keluar</span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Theme & Settings -->
+            <div class="nav-settings">
+                <button id="theme-toggle" class="theme-btn" title="Ganti Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="accessibility-toggle" class="accessibility-btn" title="Aksesibilitas">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Backdrop -->
+        <div id="nav-backdrop" class="nav-backdrop" onclick="closeNavOverlay()"></div>
+
+        <!-- Main Content Container -->
+        <main id="content-container" class="content-container">
+            <!-- SECTION: Beranda (Home) -->
+            <section id="section-beranda" class="content-section active" data-section="beranda">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span class="hero-icon">🌍</span>
+                            Aksi Iklim dengan AI
+                        </h1>
+                        <p class="hero-subtitle">Platform Cerdas untuk Mitigasi & Adaptasi Perubahan Iklim</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="navigateTo(null, 'monitor')">
+                                <i class="fas fa-cloud"></i> Mulai Monitor
+                            </button>
+                            <button class="btn btn-secondary" onclick="navigateTo(null, 'chat')">
+                                <i class="fas fa-robot"></i> Chat dengan AI
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="floating-shapes">
+                            <div class="shape shape-1"></div>
+                            <div class="shape shape-2"></div>
+                            <div class="shape shape-3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Overview -->
+                <div class="features-section">
+                    <h2 class="section-title">Fitur Utama</h2>
+                    <div class="features-grid">
+                        <div class="feature-card" data-feature="climate">
+                            <div class="feature-icon">
+                                <i class="fas fa-cloud-sun"></i>
+                            </div>
+                            <h3>Monitor Iklim</h3>
+                            <p>Prediksi cuaca ekstrim & risiko bencana real-time</p>
+                        </div>
+                        <div class="feature-card" data-feature="energy">
+                            <div class="feature-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3>Energi Terbarukan</h3>
+                            <p>Jejak karbon & solusi energi berkelanjutan</p>
+                        </div>
+                        <div class="feature-card" data-feature="waste">
+                            <div class="feature-icon">
+                                <i class="fas fa-recycle"></i>
+                            </div>
+                            <h3>Lingkungan Hidup</h3>
+                            <p>Manajemen sampah & kualitas udara</p>
+                        </div>
+                        <div class="feature-card" data-feature="chat">
+                            <div class="feature-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3>AI Konsultan</h3>
+                            <p>Chatbot pintar untuk tanya solusi hijau</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="impact-cta">
+                    <h2>Mari Bersama Selamatkan Bumi</h2>
+                    <p>Teknologi AI untuk aksi iklim yang nyata dan terukur</p>
+                    <button class="btn btn-accent" onclick="navigateTo(null, 'tentang')">
+                        Pelajari Dampak Sosial <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- SECTION: Monitor Iklim (Climate Monitor) -->
+            <section id="section-monitor" class="content-section" data-section="monitor">
+                <div class="page-header">
+                    <h1><i class="fas fa-cloud"></i> Monitor Iklim Realtime</h1>
+                    <p>Prediksi cuaca ekstrim & analisis risiko bencana alam</p>
+                </div>
+
+                <div class="monitor-grid">
+                    <!-- Weather Prediction Card -->
+                    <div class="climate-card card-3d" data-type="weather">
+                        <div class="card-header">
+                            <h3><i class="fas fa-cloud-sun"></i> Prediksi Cuaca</h3>
+                            <span class="data-source">Simulasi AI</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="weather-display">
+                                <div class="weather-main">
+                                    <div class="weather-temp">28°C</div>
+                                    <div class="weather-condition">Hujan Lebat</div>
+                                </div>
+                                <div class="weather-details">
+                                    <div class="detail-item">
+                                        <span class="label">Kelembaban</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 85%"></div>
+                                        </div>
+                                        <span class="value">85%</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="label">Kecepatan Angin</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 45%"></div>
+                                        </div>
+                                        <span class="value">18 km/h</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flood Risk Card -->
+                    <div class="climate-card card-3d" data-type="flood">
+                        <div class="card-header">
+                            <h3><i class="fas fa-water"></i> Risiko Banjir</h3>
+                            <span class="risk-badge risk-high">TINGGI</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="risk-meter">
+                                <div class="risk-scale">
+                                    <div class="risk-indicator" style="left: 75%;">
+                                        <div class="risk-tooltip">75%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="risk-regions">
+                                <h4>Wilayah Berisiko:</h4>
+                                <ul>
+                                    <li><span class="badge">Jabodetabek</span></li>
+                                    <li><span class="badge">Medan</span></li>
+                                    <li><span class="badge">Makassar</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Forest Fire Risk Card -->
+                    <div class="climate-card card-3d" data-type="fire">
+                        <div class="card-header">
+                            <h3><i class="fas fa-fire"></i> Risiko Kebakaran</h3>
+                            <span class="risk-badge risk-medium">SEDANG</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="risk-meter">
+                                <div class="risk-scale">
+                                    <div class="risk-indicator" style="left: 45%;">
+                                        <div class="risk-tooltip">45%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="risk-factors">
+                                <h4>Faktor Penyebab:</h4>
+                                <p>🌡️ Suhu tinggi | 💨 Angin kering | 📉 Kelembaban rendah</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drought Risk Card -->
+                    <div class="climate-card card-3d" data-type="drought">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sun"></i> Risiko Kekeringan</h3>
+                            <span class="risk-badge risk-low">RENDAH</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="risk-meter">
+                                <div class="risk-scale">
+                                    <div class="risk-indicator" style="left: 25%;">
+                                        <div class="risk-tooltip">25%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="water-resources">
+                                <h4>Ketersediaan Air:</h4>
+                                <div class="resource-bars">
+                                    <div class="resource-item">
+                                        <label>Curah Hujan</label>
+                                        <div class="bar"><div class="fill" style="width: 65%"></div></div>
+                                    </div>
+                                    <div class="resource-item">
+                                        <label>Sumber Air</label>
+                                        <div class="bar"><div class="fill" style="width: 70%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert Section -->
+                <div class="alert-section">
+                    <h3>⚠️ Peringatan Aktif</h3>
+                    <div class="alerts-list">
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="alert-content">
+                                <strong>Hujan Deras</strong>
+                                <p>Perkiraan hujan lebat hingga 150 mm dalam 24 jam ke depan</p>
+                            </div>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="alert-content">
+                                <strong>Monitoring Aktif</strong>
+                                <p>Sistem monitoring iklim terus berjalan dengan AI lokal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Energi & Karbon (Energy & Carbon) -->
+            <section id="section-energi" class="content-section" data-section="energi">
+                <div class="page-header">
+                    <h1><i class="fas fa-bolt"></i> Energi & Jejak Karbon</h1>
+                    <p>Estimasi emisi dan solusi energi terbarukan</p>
+                </div>
+
+                <div class="energy-grid">
+                    <!-- Carbon Footprint Calculator -->
+                    <div class="energy-card">
+                        <h3><i class="fas fa-carbon"></i> Kalkulator Jejak Karbon</h3>
+                        <div class="calculator-form">
+                            <div class="form-group">
+                                <label>Jenis Aktivitas</label>
+                                <select id="activity-type" onchange="calculateFootprint()">
+                                    <option value="rumah">Penggunaan Rumah</option>
+                                    <option value="transportasi">Transportasi</option>
+                                    <option value="industri">Industri</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Durasi (Bulan)</label>
+                                <input type="number" id="duration" value="1" min="1" max="12" onchange="calculateFootprint()">
+                            </div>
+                            <div class="result-box">
+                                <div class="result-number">
+                                    <span id="carbon-result" class="big-number">2.4</span>
+                                    <span class="unit">ton CO₂/bulan</span>
+                                </div>
+                                <div class="result-interpretation" id="carbon-interpretation">
+                                    Setara dengan mengendarai mobil sejauh 5,000 km
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Renewable Energy Education -->
+                    <div class="energy-card">
+                        <h3><i class="fas fa-sun"></i> Energi Terbarukan</h3>
+                        <div class="renewable-list">
+                            <div class="renewable-item">
+                                <div class="renewable-icon">☀️</div>
+                                <div class="renewable-content">
+                                    <h4>Solar (Surya)</h4>
+                                    <p>Efisiensi: 15-22% | Biaya: Rp 15-25 juta/kW</p>
+                                    <div class="efficiency-bar">
+                                        <div class="efficiency-fill" style="width: 18%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="renewable-item">
+                                <div class="renewable-icon">💨</div>
+                                <div class="renewable-content">
+                                    <h4>Wind (Angin)</h4>
+                                    <p>Efisiensi: 35-45% | Biaya: Rp 50-80 juta/kW</p>
+                                    <div class="efficiency-bar">
+                                        <div class="efficiency-fill" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="renewable-item">
+                                <div class="renewable-icon">💧</div>
+                                <div class="renewable-content">
+                                    <h4>Hydro (Air)</h4>
+                                    <p>Efisiensi: 85-90% | Biaya: Rp 100-200 juta/kW</p>
+                                    <div class="efficiency-bar">
+                                        <div class="efficiency-fill" style="width: 87%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Energy Efficiency Tips -->
+                    <div class="energy-card">
+                        <h3><i class="fas fa-lightbulb"></i> Tips Efisiensi</h3>
+                        <div class="tips-container">
+                            <div class="tip-item">
+                                <div class="tip-icon">1</div>
+                                <div class="tip-content">
+                                    <h4>Gunakan LED</h4>
+                                    <p>Hemat 80% energi vs lampu pijar</p>
+                                </div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-icon">2</div>
+                                <div class="tip-content">
+                                    <h4>AC Hemat</h4>
+                                    <p>Atur 25-27°C & tutup pintu ruangan</p>
+                                </div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-icon">3</div>
+                                <div class="tip-content">
+                                    <h4>Transportasi Hijau</h4>
+                                    <p>Gunakan transportasi umum & sepeda</p>
+                                </div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-icon">4</div>
+                                <div class="tip-content">
+                                    <h4>Kurangi Limbah</h4>
+                                    <p>Recycle, reuse, reduce secara konsisten</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animated Chart -->
+                <div class="chart-section">
+                    <h3>📊 Tren Emisi Global (Simulasi)</h3>
+                    <div class="chart-container">
+                        <div class="simple-chart">
+                            <div class="bar-item" style="height: 30%;" title="2020">
+                                <span class="bar-label">30%</span>
+                            </div>
+                            <div class="bar-item" style="height: 45%;" title="2021">
+                                <span class="bar-label">45%</span>
+                            </div>
+                            <div class="bar-item" style="height: 55%;" title="2022">
+                                <span class="bar-label">55%</span>
+                            </div>
+                            <div class="bar-item" style="height: 50%;" title="2023">
+                                <span class="bar-label">50%</span>
+                            </div>
+                            <div class="bar-item" style="height: 40%;" title="2024 (Proyeksi)">
+                                <span class="bar-label">40%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Lingkungan (Environment) -->
+            <section id="section-lingkungan" class="content-section" data-section="lingkungan">
+                <div class="page-header">
+                    <h1><i class="fas fa-leaf"></i> Kesehatan Lingkungan</h1>
+                    <p>Manajemen sampah & kualitas udara</p>
+                </div>
+
+                <div class="environment-grid">
+                    <!-- Air Quality -->
+                    <div class="env-card">
+                        <h3><i class="fas fa-wind"></i> Kualitas Udara</h3>
+                        <div class="air-quality">
+                            <div class="aqi-circle">
+                                <div class="aqi-value">68</div>
+                                <div class="aqi-status">SEDANG</div>
+                            </div>
+                            <div class="pollutants">
+                                <div class="pollutant">
+                                    <label>PM2.5</label>
+                                    <div class="pollutant-bar">
+                                        <div class="pollutant-fill" style="width: 65%; background: #f97316;"></div>
+                                    </div>
+                                    <span>35 µg/m³</span>
+                                </div>
+                                <div class="pollutant">
+                                    <label>O₃</label>
+                                    <div class="pollutant-bar">
+                                        <div class="pollutant-fill" style="width: 45%; background: #eab308;"></div>
+                                    </div>
+                                    <span>55 ppb</span>
+                                </div>
+                                <div class="pollutant">
+                                    <label>NO₂</label>
+                                    <div class="pollutant-bar">
+                                        <div class="pollutant-fill" style="width: 30%; background: #10b981;"></div>
+                                    </div>
+                                    <span>28 ppb</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Waste Management -->
+                    <div class="env-card">
+                        <h3><i class="fas fa-trash"></i> Manajemen Sampah</h3>
+                        <div class="waste-categories">
+                            <div class="waste-item">
+                                <div class="waste-icon">♻️</div>
+                                <div class="waste-data">
+                                    <h4>Organik</h4>
+                                    <p>60% | Kompos & Biogas</p>
+                                </div>
+                            </div>
+                            <div class="waste-item">
+                                <div class="waste-icon">🏭</div>
+                                <div class="waste-data">
+                                    <h4>Plastik</h4>
+                                    <p>20% | Daur Ulang</p>
+                                </div>
+                            </div>
+                            <div class="waste-item">
+                                <div class="waste-icon">🪨</div>
+                                <div class="waste-data">
+                                    <h4>Logam</h4>
+                                    <p>15% | Recycling</p>
+                                </div>
+                            </div>
+                            <div class="waste-item">
+                                <div class="waste-icon">⚠️</div>
+                                <div class="waste-data">
+                                    <h4>Berbahaya</h4>
+                                    <p>5% | Penanganan Khusus</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biodiversity -->
+                    <div class="env-card">
+                        <h3><i class="fas fa-dna"></i> Keanekaragaman Hayati</h3>
+                        <div class="biodiversity">
+                            <div class="species-stat">
+                                <div class="stat-icon">🐘</div>
+                                <div class="stat-info">
+                                    <h4>Mamalia</h4>
+                                    <p>6,400+ spesies terancam punah</p>
+                                </div>
+                            </div>
+                            <div class="species-stat">
+                                <div class="stat-icon">🦅</div>
+                                <div class="stat-info">
+                                    <h4>Burung</h4>
+                                    <p>10,000+ spesies, 1,400+ terancam</p>
+                                </div>
+                            </div>
+                            <div class="species-stat">
+                                <div class="stat-icon">🌿</div>
+                                <div class="stat-info">
+                                    <h4>Tumbuhan</h4>
+                                    <p>400,000+ spesies, 20% terancam</p>
+                                </div>
+                            </div>
+                            <div class="species-stat">
+                                <div class="stat-icon">🐠</div>
+                                <div class="stat-info">
+                                    <h4>Akuatik</h4>
+                                    <p>Ekosistem laut terdegradassi cepat</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conservation Actions -->
+                <div class="conservation-section">
+                    <h3>🌳 Aksi Konservasi</h3>
+                    <div class="actions-list">
+                        <div class="action-card">
+                            <div class="action-number">1</div>
+                            <h4>Reboisasi</h4>
+                            <p>Tanam pohon untuk mengembalikan hutan tropis</p>
+                        </div>
+                        <div class="action-card">
+                            <div class="action-number">2</div>
+                            <h4>Lindungi Laut</h4>
+                            <p>Ciptakan marine protected areas (MPA)</p>
+                        </div>
+                        <div class="action-card">
+                            <div class="action-number">3</div>
+                            <h4>Edukasi</h4>
+                            <p>Kampanye awareness tentang lingkungan</p>
+                        </div>
+                        <div class="action-card">
+                            <div class="action-number">4</div>
+                            <h4>Regulasi</h4>
+                            <p>Terapkan kebijakan lingkungan ketat</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: AI Chat -->
+            <section id="section-chat" class="content-section" data-section="chat">
+                <div class="page-header">
+                    <h1><i class="fas fa-robot"></i> AI Konsultan Lingkungan</h1>
+                    <p>Tanya jawab tentang iklim, lingkungan, dan solusi hijau</p>
+                </div>
+
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="chat-message ai-message">
+                            <div class="message-content">
+                                🤖 Halo! Saya AI Konsultan GreenVision. Saya siap membantu menjawab pertanyaan tentang iklim, lingkungan, dan aksi hijau. Tanyakan apa saja! 🌍
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-box">
+                        <input 
+                            type="text" 
+                            id="chat-input" 
+                            class="chat-input" 
+                            placeholder="Tanya tentang iklim, energi, lingkungan..."
+                            onkeypress="handleChatKeyPress(event)"
+                        >
+                        <button class="chat-send-btn" onclick="sendChatMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+
+                    <!-- Suggested Questions -->
+                    <div class="suggested-questions">
+                        <p>Pertanyaan Populer:</p>
+                        <div class="suggestions-list">
+                            <button onclick="insertSuggestion('Bagaimana cara mengurangi emisi karbon pribadi?')" class="suggestion-btn">
+                                Emisi Karbon
+                            </button>
+                            <button onclick="insertSuggestion('Apa energi terbarukan terbaik untuk rumah?')" class="suggestion-btn">
+                                Energi Terbarukan
+                            </button>
+                            <button onclick="insertSuggestion('Bagaimana dampak perubahan iklim di Indonesia?')" class="suggestion-btn">
+                                Perubahan Iklim
+                            </button>
+                            <button onclick="insertSuggestion('Tips mengelola sampah plastik dengan baik')" class="suggestion-btn">
+                                Sampah Plastik
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Tentang Dampak Sosial (About Social Impact) -->
+            <section id="section-tentang" class="content-section" data-section="tentang">
+                <div class="page-header">
+                    <h1><i class="fas fa-heart"></i> Dampak Sosial & Misi</h1>
+                    <p>Kontribusi nyata untuk perubahan iklim global</p>
+                </div>
+
+                <div class="impact-content">
+                    <!-- Mission -->
+                    <div class="impact-card">
+                        <h2><i class="fas fa-target"></i> Misi Kami</h2>
+                        <p>
+                            GreenVision AI adalah platform teknologi AI lokal yang dirancang untuk memberdayakan individu, 
+                            komunitas, dan organisasi dalam mengambil aksi nyata terhadap perubahan iklim. Kami percaya bahwa 
+                            teknologi AI yang accessible dan terdesentralisasi dapat menjadi katalis untuk perubahan sosial 
+                            yang berkelanjutan.
+                        </p>
+                    </div>
+
+                    <!-- Vision -->
+                    <div class="impact-card">
+                        <h2><i class="fas fa-lightbulb"></i> Visi Kami</h2>
+                        <p>
+                            Menciptakan ekosistem digital yang memberdayakan aksi iklim lokal dengan memanfaatkan kecerdasan 
+                            buatan yang etis, transparan, dan ramah lingkungan. Mengurangi ketergantungan pada cloud computing 
+                            eksternal melalui Ollama Local LLM.
+                        </p>
+                    </div>
+
+                    <!-- Impact Metrics -->
+                    <div class="impact-metrics">
+                        <h2><i class="fas fa-chart-bar"></i> Dampak Terukur</h2>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-number">1,000+</div>
+                                <div class="metric-label">Pengguna Aktif</div>
+                                <p>Komunitas yang peduli lingkungan</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-number">500K</div>
+                                <div class="metric-label">Ton CO₂ Terukur</div>
+                                <p>Emisi yang dipantau & diminimalkan</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-number">100K</div>
+                                <div class="metric-label">Pohon Ditanam</div>
+                                <p>Melalui aksi reboisasi komunitas</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-number">50+</div>
+                                <div class="metric-label">Organisasi</div>
+                                <p>Partnership untuk aksi iklim</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technology Stack -->
+                    <div class="tech-stack">
+                        <h2><i class="fas fa-microchip"></i> Teknologi Hijau</h2>
+                        <p>GreenVision AI dibangun dengan komitmen lingkungan:</p>
+                        <ul class="tech-list">
+                            <li>✅ <strong>Ollama Local LLM</strong> - AI tanpa cloud eksternal, hemat energi</li>
+                            <li>✅ <strong>Minimalis JavaScript</strong> - UI ringan, cepat, efficient</li>
+                            <li>✅ <strong>CSS Native</strong> - Animasi tanpa library berat</li>
+                            <li>✅ <strong>Node.js Backend</strong> - Efisien & scalable</li>
+                            <li>✅ <strong>Open Source</strong> - Transparansi penuh untuk komunitas</li>
+                        </ul>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="cta-large">
+                        <h2>Bergabunglah dalam Aksi Iklim</h2>
+                        <p>Mari bersama-sama membangun masa depan yang lebih hijau dan berkelanjutan.</p>
+                        <button class="btn btn-accent" onclick="navigateTo(null, 'chat')">
+                            Mulai Konsultasi dengan AI 🤖
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Login -->
+            <section id="section-login" class="content-section" data-section="login">
+                <div class="page-header">
+                    <h1><i class="fas fa-sign-in-alt"></i> Masuk</h1>
+                    <p>Akses akun GreenVision Anda</p>
+                </div>
+                <div class="auth-container">
+                    <div class="feature-card auth-card">
+                        <form id="login-form" onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label for="login-email">Email</label>
+                                <input type="email" id="login-email" class="form-control" required placeholder="email@contoh.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Password</label>
+                                <input type="password" id="login-password" class="form-control" required placeholder="******">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+                        </form>
+                        <p class="auth-footer">
+                            Belum punya akun? <a href="#" onclick="navigateTo(event, 'register')">Daftar di sini</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Register -->
+            <section id="section-register" class="content-section" data-section="register">
+                <div class="page-header">
+                    <h1><i class="fas fa-user-plus"></i> Daftar</h1>
+                    <p>Bergabung dengan komunitas GreenVision</p>
+                </div>
+                <div class="auth-container">
+                    <div class="feature-card auth-card">
+                        <form id="register-form" onsubmit="handleRegister(event)">
+                            <div class="form-group">
+                                <label for="register-name">Nama Lengkap</label>
+                                <input type="text" id="register-name" class="form-control" required placeholder="Nama Anda">
+                            </div>
+                            <div class="form-group">
+                                <label for="register-email">Email</label>
+                                <input type="email" id="register-email" class="form-control" required placeholder="email@contoh.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="register-password">Password</label>
+                                <input type="password" id="register-password" class="form-control" required placeholder="******">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Daftar</button>
+                        </form>
+                        <p class="auth-footer">
+                            Sudah punya akun? <a href="#" onclick="navigateTo(event, 'login')">Masuk di sini</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast hidden">
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

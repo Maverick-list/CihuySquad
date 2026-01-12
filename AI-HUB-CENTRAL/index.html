@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="AI Hub Central - Portal terintegrasi untuk 4 platform AI: GreenVision, SehatKu, EduCerdas, dan InfraVision">
+    <meta name="keywords"
+        content="AI, artificial intelligence, hub, GreenVision, SehatKu, EduCerdas, InfraVision, Indonesia">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Amaranth - AI Hub Central</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <!-- Animated Mesh Gradient Background -->
+    <div class="mesh-gradient"></div>
+
+    <!-- ===== SPLASH SCREEN ===== -->
+    <div id="splash-screen" class="splash-screen">
+        <img src="assets/logo.png" alt="Amaranth Logo" class="splash-logo">
+        <h1 class="splash-title">Amaranth</h1>
+        <p class="splash-subtitle">AI Hub Central</p>
+        <div class="splash-loader">
+            <div class="splash-loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN HUB CONTAINER ===== -->
+    <main id="hub-container" class="hub-container">
+        <!-- Header -->
+        <header class="hub-header">
+            <h1 class="hub-title">Amaranth</h1>
+            <p class="hub-description">
+                Portal terintegrasi untuk mengakses 4 platform AI terbaik.
+                Pilih proyek yang ingin Anda jelajahi.
+            </p>
+        </header>
+
+        <!-- AI Selection Cards Grid -->
+        <div class="cards-grid">
+            <!-- GreenVision AI Card -->
+            <article class="ai-card greenvision stagger-1" data-project="greenvision">
+                <div class="card-icon">🌱</div>
+                <h2 class="card-title">GreenVision AI</h2>
+                <span class="card-subtitle">Climate & Environment</span>
+                <p class="card-description">
+                    Platform AI untuk aksi iklim dan monitoring lingkungan real-time dengan visualisasi data canggih.
+                </p>
+                <div class="card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </article>
+
+            <!-- SehatKu AI Card -->
+            <article class="ai-card sehatku stagger-2" data-project="sehatku">
+                <div class="card-icon">🏥</div>
+                <h2 class="card-title">SehatKu AI</h2>
+                <span class="card-subtitle">Healthcare & Wellness</span>
+                <p class="card-description">
+                    Asisten kesehatan cerdas dengan Llama 3.2 untuk diagnosis awal, prediksi risiko, dan konsultasi.
+                </p>
+                <div class="card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </article>
+
+            <!-- EduCerdas AI Card -->
+            <article class="ai-card educerdas stagger-3" data-project="educerdas">
+                <div class="card-icon">🎓</div>
+                <h2 class="card-title">EduCerdas AI</h2>
+                <span class="card-subtitle">Personalized Learning</span>
+                <p class="card-description">
+                    Platform pembelajaran adaptif dengan mode aksesibilitas untuk disleksia, autisme, dan kesulitan
+                    fokus.
+                </p>
+                <div class="card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </article>
+
+            <!-- InfraVision AI Card -->
+            <article class="ai-card infravision stagger-4" data-project="infravision">
+                <div class="card-icon">🏗️</div>
+                <h2 class="card-title">InfraVision AI</h2>
+                <span class="card-subtitle">Infrastructure Priority</span>
+                <p class="card-description">
+                    Sistem prioritas pembangunan infrastruktur berbasis AI yang objektif dan transparan.
+                </p>
+                <div class="card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </article>
+        </div>
+
+        <!-- Footer -->
+        <footer style="margin-top: 60px; text-align: center; color: var(--text-muted); font-size: 0.875rem;">
+            <p>© 2026 AI Hub Central • Hackathon Project</p>
+            <p style="margin-top: 8px; color: var(--slate-600);">
+                GreenVision • SehatKu • EduCerdas • InfraVision
+            </p>
+        </footer>
+    </main>
+
+    <!-- ===== PROJECT VIEW (iframe container) ===== -->
+    <div id="project-view" class="project-view">
+        <!-- Project Header -->
+        <header class="project-header">
+            <button id="back-button" class="back-button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Kembali ke Hub
+            </button>
+            <div id="project-title" class="project-title">
+                <!-- Dynamically updated -->
+            </div>
+            <div style="width: 120px;"></div> <!-- Spacer for centering -->
+        </header>
+
+        <!-- Project iframe -->
+        <iframe id="project-frame" class="project-frame" src="about:blank" title="Project View"></iframe>
+    </div>
+
+    <!-- Scripts -->
+    <script src="hub-logic.js"></script>
+</body>
+
+</html>

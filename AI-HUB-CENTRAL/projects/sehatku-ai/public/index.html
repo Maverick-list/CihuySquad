@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="SehatKu AI - Asisten Kesehatan Cerdas untuk Indonesia. Platform AI untuk diagnosis awal, konsultasi kesehatan, dan edukasi preventif.">
+  <meta name="keywords" content="kesehatan, AI, telemedicine, Indonesia, diagnosis, konsultasi">
+  <meta name="theme-color" content="#6366f1">
+
+  <!-- PWA Meta Tags (Optional - untuk production) -->
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SehatKu AI">
+
+  <title>SehatKu AI - Asisten Kesehatan Cerdas</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Leaflet Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Google Maps API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places,geometry&callback=initMapService"></script>
+</head>
+
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+      <!-- Animated Logo SVG -->
+      <div class="logo-container">
+        <img src="assets/logo.svg" alt="SehatKu AI Logo" class="animated-logo">
+      </div>
+      <h2 class="loading-title">SehatKu AI</h2>
+      <p class="loading-subtitle">Platform Kesehatan Digital Terdepan</p>
+
+      <!-- Progress Bar -->
+      <div class="progress-bar-container">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <p class="progress-text">Memuat aplikasi<span class="loading-dots">...</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
+          </svg>
+        </div>
+        <span class="brand-text">SehatKu AI</span>
+      </div>
+
+      <div class="nav-menu" id="navMenu">
+        <a href="#home" class="nav-link active" data-page="home">Beranda</a>
+        <a href="#symptom-checker" class="nav-link" data-page="symptom-checker">Cek Gejala</a>
+        <a href="#risk-prediction" class="nav-link" data-page="risk-prediction">Prediksi Risiko</a>
+        <a href="#mental-health" class="nav-link" data-page="mental-health">Kesehatan Mental</a>
+        <a href="#dashboard" class="nav-link" data-page="dashboard">Dashboard</a>
+        <div class="nav-divider"></div>
+        <button class="nav-btn" id="loginBtn" data-action="login">Masuk</button>
+        <button class="nav-btn" id="profileBtn" data-action="profile" style="display: none;">Profile</button>
+        <button class="nav-btn premium-btn" id="consultationBtn" data-action="consultation" style="display: none;">🩺
+          Konsultasi</button>
+        <button class="nav-btn" id="hospitalBtn" data-action="hospital">🏥 Cari RS</button>
+      </div>
+
+      <button id="themeToggle" class="theme-toggle" aria-label="Switch theme">
+        🌙
+      </button>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Visual Storytelling Page -->
+  <div id="storytelling-page" class="storytelling-page hidden">
+    <div class="storytelling-container">
+
+      <!-- Section 1: Brand Intro -->
+      <section class="story-section" data-story="intro">
+        <div class="story-content">
+          <h1 class="story-title gradient-text">SehatKu AI</h1>
+          <p class="story-subtitle">Platform Kesehatan Digital Terdepan</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Mission -->
+      <section class="story-section" data-story="mission">
+        <div class="story-content">
+          <div class="story-icon">🔍</div>
+          <h2 class="story-heading">AI untuk Deteksi Dini Kesehatan</h2>
+          <p class="story-text">
+            Mendeteksi gejala penyakit sejak awal dengan teknologi kecerdasan buatan,
+            membantu Anda mendapatkan penanganan yang tepat waktu.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3: Philosophy -->
+      <section class="story-section" data-story="philosophy">
+        <div class="story-content">
+          <div class="story-icon">🤝</div>
+          <h2 class="story-heading">AI Pendamping Pasien,<br>Bukan Pengganti Dokter</h2>
+          <p class="story-text">
+            Kami percaya AI adalah alat bantu yang memperkuat, bukan menggantikan,
+            peran dokter dan tenaga medis profesional.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 4: Integration -->
+      <section class="story-section" data-story="integration">
+        <div class="story-content">
+          <div class="story-icon">🏥</div>
+          <h2 class="story-heading">Terhubung dengan<br>Layanan Kesehatan Nyata</h2>
+          <p class="story-text">
+            Integrasi dengan rumah sakit, klinik, dan apotek terdekat
+            untuk memastikan Anda mendapat perawatan yang Anda butuhkan.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 5: Call to Action -->
+      <section class="story-section" data-story="cta">
+        <div class="story-content">
+          <h2 class="story-heading">Siap Memulai Perjalanan<br>Kesehatan Anda?</h2>
+          <button class="btn btn-primary btn-large" onclick="enterMainApp()">
+            Mulai Sekarang
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <p class="story-skip" onclick="enterMainApp()">Lewati intro →</p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-icon"></div>
+      <p>Scroll untuk melanjutkan</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main id="mainContent">
+
+    <!-- Home Page -->
+    <section id="home-page" class="page active">
+      <!-- Hero Section -->
+      <div class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Kesehatan Anda,<br>
+            <span class="gradient-text">Prioritas Kami</span>
+          </h1>
+          <p class="hero-subtitle">
+            Platform AI kesehatan terdepan untuk diagnosis awal, konsultasi, dan edukasi kesehatan preventif.
+            Akses layanan kesehatan berkualitas dari mana saja, kapan saja.
+          </p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary" onclick="navigateTo('symptom-checker')">
+              <span>Mulai Cek Gejala</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+            <button class="btn btn-secondary" onclick="navigateTo('risk-prediction')">
+              <span>Prediksi Risiko</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="floating-card card-1">
+            <div class="card-icon">❤️</div>
+            <div class="card-text">
+              <strong>98%</strong>
+              <span>Akurasi AI</span>
+            </div>
+          </div>
+          <div class="floating-card card-2">
+            <div class="card-icon">🏥</div>
+            <div class="card-text">
+              <strong>24/7</strong>
+              <span>Tersedia</span>
+            </div>
+          </div>
+          <div class="floating-card card-3">
+            <div class="card-icon">🔒</div>
+            <div class="card-text">
+              <strong>100%</strong>
+              <span>Privasi Terjaga</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="features-section">
+        <h2 class="section-title">Fitur Unggulan</h2>
+        <div class="features-grid">
+
+          <div class="feature-card" onclick="navigateTo('symptom-checker')">
+            <div class="feature-icon">🔍</div>
+            <h3>AI Symptom Checker</h3>
+            <p>Analisis gejala dengan AI canggih. Mendukung Bahasa Indonesia dan bahasa daerah.</p>
+            <div class="feature-badge">Offline Ready</div>
+          </div>
+
+          <div class="feature-card" onclick="navigateTo('risk-prediction')">
+            <div class="feature-icon">📊</div>
+            <h3>Prediksi Risiko Penyakit</h3>
+            <p>Deteksi dini risiko diabetes, hipertensi, dan penyakit kardiovaskular.</p>
+            <div class="feature-badge">AI Powered</div>
+          </div>
+
+          <div class="feature-card" onclick="navigateTo('mental-health')">
+            <div class="feature-icon">🧠</div>
+            <h3>Pendamping Kesehatan Mental</h3>
+            <p>AI companion yang empatik untuk dukungan kesehatan mental Anda.</p>
+            <div class="feature-badge">24/7 Support</div>
+          </div>
+
+          <div class="feature-card" onclick="navigateTo('dashboard')">
+            <div class="feature-icon">📈</div>
+            <h3>Dashboard Kesehatan</h3>
+            <p>Pantau metrics kesehatan Anda dengan visualisasi data yang intuitif.</p>
+            <div class="feature-badge">Real-time</div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">👨‍⚕️</div>
+            <h3>Decision Support System</h3>
+            <p>Bantu tenaga medis dengan rekomendasi treatment berbasis evidence.</p>
+            <div class="feature-badge">For Medics</div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Edukasi Kesehatan</h3>
+            <p>Artikel dan tips kesehatan yang dipersonalisasi untuk Anda.</p>
+            <div class="feature-badge">Personalized</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stats Section -->
+      <div class="stats-section">
+        <div class="stat-item">
+          <div class="stat-number">10K+</div>
+          <div class="stat-label">Pengguna Aktif</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Konsultasi AI</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Tingkat Kepuasan</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Layanan Tersedia</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Symptom Checker Page -->
+    <section id="symptom-checker-page" class="page">
+      <div class="page-header">
+        <h1>🔍 AI Symptom Checker</h1>
+        <p>Ceritakan gejala yang Anda alami, AI kami akan membantu menganalisis</p>
+      </div>
+
+      <div class="symptom-checker-container">
+        <!-- Symptom Input -->
+        <div class="symptom-input-section glass-card">
+          <h3>Gejala yang Anda Alami</h3>
+          <div class="symptom-input-group">
+            <input type="text" id="symptomInput" class="input-field" placeholder="Contoh: demam, sakit kepala, batuk..."
+              onkeypress="handleSymptomEnter(event)">
+            <button class="btn btn-primary" onclick="addSymptom()">Tambah</button>
+          </div>
+
+          <div id="symptomList" class="symptom-list"></div>
+
+          <button class="btn btn-primary btn-block" id="analyzeBtn" onclick="analyzeSymptoms()" disabled>
+            Analisis dengan AI
+          </button>
+        </div>
+
+        <!-- Analysis Result -->
+        <div id="analysisResult" class="analysis-result glass-card" style="display: none;">
+          <h3>Hasil Analisis AI</h3>
+          <div id="analysisContent"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Risk Prediction Page -->
+    <section id="risk-prediction-page" class="page">
+      <div class="page-header">
+        <h1>📊 Prediksi Risiko Penyakit</h1>
+        <p>Deteksi dini risiko penyakit dengan AI machine learning</p>
+      </div>
+
+      <div class="prediction-container">
+        <!-- Input Form -->
+        <div class="prediction-form glass-card">
+          <h3>Data Kesehatan Anda</h3>
+          <form id="predictionForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Umur (tahun)</label>
+                <input type="number" id="umur" class="input-field" required min="1" max="120">
+              </div>
+              <div class="form-group">
+                <label>Jenis Kelamin</label>
+                <select id="jenisKelamin" class="input-field" required>
+                  <option value="">Pilih...</option>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Tinggi Badan (cm)</label>
+                <input type="number" id="tinggiBadan" class="input-field" required min="50" max="250">
+              </div>
+              <div class="form-group">
+                <label>Berat Badan (kg)</label>
+                <input type="number" id="beratBadan" class="input-field" required min="10" max="300">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Aktivitas Fisik</label>
+              <select id="aktivitasFisik" class="input-field">
+                <option value="Tidak Pernah">Tidak Pernah</option>
+                <option value="Jarang">Jarang (1-2x/minggu)</option>
+                <option value="Sedang">Sedang (3-4x/minggu)</option>
+                <option value="Sering">Sering (5-7x/minggu)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Merokok?</label>
+              <select id="merokok" class="input-field">
+                <option value="Tidak">Tidak</option>
+                <option value="Ya">Ya</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              Prediksi Risiko Saya
+            </button>
+          </form>
+        </div>
+
+        <!-- Prediction Results -->
+        <div id="predictionResults" class="prediction-results" style="display: none;"></div>
+      </div>
+    </section>
+
+    <!-- Mental Health Page -->
+    <section id="mental-health-page" class="page">
+      <div class="page-header">
+        <h1>🧠 Pendamping Kesehatan Mental</h1>
+        <p>Ruang aman untuk berbagi dan mendapat dukungan</p>
+      </div>
+
+      <div class="mental-health-container">
+        <div class="chat-container glass-card">
+          <div id="chatMessages" class="chat-messages"></div>
+
+          <div class="chat-input-container">
+            <input type="text" id="chatInput" class="input-field" placeholder="Ketik pesan Anda..."
+              onkeypress="handleChatEnter(event)">
+            <button class="btn btn-primary" onclick="sendMessage()">
+              Kirim
+            </button>
+          </div>
+        </div>
+
+        <div class="mental-health-info glass-card">
+          <h3>💚 Anda Tidak Sendiri</h3>
+          <p>Jika Anda dalam kondisi darurat atau membutuhkan bantuan profesional:</p>
+          <div class="hotline-info">
+            <strong>Hotline Kesehatan Mental:</strong>
+            <a href="tel:119">119</a>
+          </div>
+          <div class="hotline-info">
+            <strong>Halo Kemenkes:</strong>
+            <a href="tel:1500567">1500-567</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Page -->
+    <section id="dashboard-page" class="page">
+      <div class="page-header">
+        <h1>📈 Dashboard Kesehatan</h1>
+        <p>Pantau kesehatan Anda secara real-time</p>
+      </div>
+
+      <div class="dashboard-container">
+        <div class="dashboard-grid">
+          <div class="dashboard-card glass-card">
+            <h3>BMI Anda</h3>
+            <div class="metric-value" id="bmiValue">-</div>
+            <div class="metric-label" id="bmiCategory">Belum ada data</div>
+          </div>
+
+          <div class="dashboard-card glass-card">
+            <h3>Konsultasi AI</h3>
+            <div class="metric-value" id="consultationCount">0</div>
+            <div class="metric-label">Total konsultasi</div>
+          </div>
+
+          <div class="dashboard-card glass-card">
+            <h3>Risiko Tertinggi</h3>
+            <div class="metric-value" id="highestRisk">-</div>
+            <div class="metric-label">Perlu perhatian</div>
+          </div>
+
+          <div class="dashboard-card glass-card">
+            <h3>Status Kesehatan</h3>
+            <div class="metric-value" id="healthStatus">Baik</div>
+            <div class="metric-label">Overall health</div>
+          </div>
+        </div>
+
+        <div class="dashboard-chart glass-card">
+          <h3>Riwayat Konsultasi</h3>
+          <div id="chartContainer" class="chart-placeholder">
+            <p>Data visualisasi akan ditampilkan di sini</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>SehatKu AI</h4>
+        <p>Platform kesehatan digital berbasis AI untuk Indonesia</p>
+      </div>
+      <div class="footer-section">
+        <h4>Fitur</h4>
+        <a href="#symptom-checker">Cek Gejala</a>
+        <a href="#risk-prediction">Prediksi Risiko</a>
+        <a href="#mental-health">Kesehatan Mental</a>
+      </div>
+      <div class="footer-section">
+        <h4>Kontak</h4>
+        <p>Email: info@sehatku.ai</p>
+        <p>Hotline: 119</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 SehatKu AI. Hackathon Project - Akselerasi Kesehatan Melalui Inovasi Digital</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="modules/symptom-checker.js"></script>
+  <script src="modules/risk-prediction.js"></script>
+  <script src="modules/mental-health.js"></script>
+  <script src="modules/dashboard.js"></script>
+  <script src="modules/storytelling.js"></script>
+  <script src="modules/auth.js"></script>
+  <script src="modules/premium.js"></script>
+  <script src="modules/hospital.js"></script>
+  <script src="modules/ai-survey.js"></script>
+  <script src="modules/EmergencyModule.js"></script>
+  <!-- MapService will be loaded dynamically -->
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Definisi Gradients -->
+  <defs>
+    <!-- Gradient untuk background circle -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1">
+        <animate attributeName="stop-color" values="#6366f1;#8b5cf6;#6366f1" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1">
+        <animate attributeName="stop-color" values="#ec4899;#f43f5e;#ec4899" dur="3s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    
+    <!-- Gradient untuk heart -->
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f43f5e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1"/>
+    </linearGradient>
+    
+    <!-- Gradient untuk pulse rings -->
+    <radialGradient id="pulseGradient">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0"/>
+    </radialGradient>
+    
+    <!-- Filter untuk glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background Circle dengan gradient animasi -->
+  <circle cx="100" cy="100" r="90" fill="url(#bgGradient)" opacity="0.1">
+    <animate attributeName="r" values="85;95;85" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Pulse Rings (3 rings dengan delay berbeda) -->
+  <circle cx="100" cy="100" r="70" fill="none" stroke="url(#pulseGradient)" stroke-width="2" opacity="0">
+    <animate attributeName="r" values="60;90;60" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.6;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="100" cy="100" r="70" fill="none" stroke="url(#pulseGradient)" stroke-width="2" opacity="0">
+    <animate attributeName="r" values="60;90;60" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.6;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="100" cy="100" r="70" fill="none" stroke="url(#pulseGradient)" stroke-width="2" opacity="0">
+    <animate attributeName="r" values="60;90;60" dur="2s" begin="1s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.6;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Medical Cross (Plus Symbol) -->
+  <g filter="url(#glow)">
+    <!-- Vertical bar -->
+    <rect x="92" y="60" width="16" height="80" rx="4" fill="url(#bgGradient)">
+      <animate attributeName="height" values="80;85;80" dur="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="60;57.5;60" dur="1.5s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- Horizontal bar -->
+    <rect x="60" y="92" width="80" height="16" rx="4" fill="url(#bgGradient)">
+      <animate attributeName="width" values="80;85;80" dur="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="60;57.5;60" dur="1.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Heart Icon (di tengah cross) -->
+  <g transform="translate(100, 100)" filter="url(#glow)">
+    <path d="M0,-8 C-3,-12 -8,-12 -10,-8 C-12,-4 -12,0 0,10 C12,0 12,-4 10,-8 C8,-12 3,-12 0,-8 Z" 
+          fill="url(#heartGradient)" 
+          stroke="#fff" 
+          stroke-width="1">
+      <!-- Heartbeat animation -->
+      <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="scale"
+        values="1;1.2;1;1.1;1"
+        dur="1.5s"
+        repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- AI Sparkles (3 sparkles di sekitar logo) -->
+  <g opacity="0.8">
+    <!-- Sparkle 1 -->
+    <circle cx="140" cy="70" r="3" fill="#6366f1">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Sparkle 2 -->
+    <circle cx="60" cy="130" r="3" fill="#ec4899">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.7s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2;4;2" dur="2s" begin="0.7s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Sparkle 3 -->
+    <circle cx="150" cy="140" r="3" fill="#8b5cf6">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1.4s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2;4;2" dur="2s" begin="1.4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Text: SehatKu AI -->
+  <text x="100" y="180" font-family="Inter, sans-serif" font-size="18" font-weight="700" text-anchor="middle" fill="url(#bgGradient)">
+    SehatKu AI
+  </text>
+</svg>
